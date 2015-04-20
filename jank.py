@@ -15,7 +15,14 @@ def store_pixel_values(gray):
       pixel.append(image[i,j])
   return pixel
 
+def return_single_vals(values):
+  pixel = []
+  for i in values:
+    pixel.append(i[:1])
+  return pixel
+
 if __name__ == '__main__':
   gray = image_to_gray()
-  pixel = store_pixel_values(gray)
-  print pixel
+  values = store_pixel_values(gray)
+  pixel = return_single_vals(values)
+  np.savetxt('values.txt', pixel, fmt="%s")
