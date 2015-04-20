@@ -1,13 +1,21 @@
 # dependencies
 import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib.image as mpimg
+import Image
 
-def color_to_gray(color):
-  return np.dot(color[...,:3], [0.299, 0.587, 0.144])
+def image_to_gray():
+  image = Image.open('image.jpg').convert('LA')
+  return image
+
+def store_pixel_values(gray):
+  height, width = gray.size
+  image = gray.load()
+  pixel = []
+  for i in range(width):
+    for j in range(height):
+      pixel.append(image[i,j])
+  return pixel
 
 if __name__ == '__main__':
-  image = mpimg.imread('image.jpg')
-  gray = color_to_gray(image)
-  plt.imshow(gray, cmap = plt.get_cmap('gray'))
-  plt.show()
+  gray = image_to_gray()
+  pixel = store_pixel_values(gray)
+  print pixel
