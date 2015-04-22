@@ -8,12 +8,12 @@ def image_to_gray():
   return image
 
 def store_pixel_values(gray):
-  global length,width
-  height, width = gray.size
-  length=height*width
+  global LENGTH, WIDTH
+  height, WIDTH = gray.size
+  LENGTH = height * WIDTH
   image = gray.load()
   pixel = []
-  for i in range(width):
+  for i in range(WIDTH):
     for j in range(height):
       pixel.append(image[i,j])
   return pixel
@@ -21,19 +21,18 @@ def store_pixel_values(gray):
 def return_single_vals(values):
   pixel = []
   for i in values:
-    # print i[0] 
     pixel.append(i[0])
   return pixel
 
 def re_matrix(pixel):
-  global length,width
+  global LENGTH, WIDTH
   new_pixel = []
-  line=[]
-  for i in range(length):
+  line = []
+  for i in range(LENGTH):
       line.append(pixel[i])
-      if (i+1)%width==0:
+      if (i + 1) % WIDTH == 0:
         new_pixel.append(line)
-        line=[]
+        line = []
   return new_pixel
 
 
@@ -41,7 +40,7 @@ if __name__ == '__main__':
   gray = image_to_gray()
   values = store_pixel_values(gray)
   pixel = return_single_vals(values)
-  new_pixel=re_matrix(pixel)
+  new_pixel = re_matrix(pixel)
   # print len(new_pixel)
   # print len(new_pixel[599])
   # print new_pixel
