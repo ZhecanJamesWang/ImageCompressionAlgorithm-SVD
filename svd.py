@@ -43,6 +43,16 @@ def re_matrix(pixel):
         line = []
   return new_pixel
 
+def svd(new_pixel, terms):
+  new_pixel = np.matrix(new_pixel)
+  U, s, V = np.linalg.svd(new_pixel, full_matrices=True)
+  V1 = np.transpose(V)
+  X = np.matrix(0)
+  j = terms
+  for i in range(j):
+    X = np.add(s[i] * np.matrix(U[:,i]) * np.matrix(V1[i,:]), X)
+  return X
+
 def pixel_to_image(og_pixel):
   # create an image from the pixel values found previously
   # saves the new image
@@ -59,8 +69,9 @@ if __name__ == '__main__':
   gray = image_to_gray()
   values = store_pixel_values(gray)
   pixel = return_single_vals(values)
-  # print pixel
   new_pixel = re_matrix(pixel)
+  terms = int(raw_input("How many terms would you like to keep? (ex 100)\n"))
+  new_pixel = svd(new_pixel, terms)
   pixel_to_image(new_pixel)
 
   np.savetxt('values.txt', new_pixel, fmt="%s")
