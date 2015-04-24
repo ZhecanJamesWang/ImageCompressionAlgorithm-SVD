@@ -12,13 +12,13 @@ def image_to_gray():
 def store_pixel_values(gray):
   # gets the value of the pixel at a coordinate
   # returns all values with color value
-  global LENGTH, WIDTH
-  height, WIDTH = gray.size
-  LENGTH = height * WIDTH
+  global LENGTH, WIDTH, HEIGHT
+  HEIGHT, WIDTH = gray.size
+  LENGTH = HEIGHT * WIDTH
   image = gray.load()
   pixel = []
   for i in range(WIDTH):
-    for j in range(height):
+    for j in range(HEIGHT):
       pixel.append(image[i,j])
   return pixel
 
@@ -33,7 +33,7 @@ def return_single_vals(values):
 def re_matrix(pixel):
   # converts the list of pixel values into proper matrix
   # returns the matrices
-  global LENGTH, WIDTH
+  global LENGTH, WIDTH, HEIGHT
   new_pixel = []
   line = []
   for i in range(LENGTH):
@@ -46,12 +46,12 @@ def re_matrix(pixel):
 def pixel_to_image(og_pixel):
   # create an image from the pixel values found previously
   # saves the new image
-  global WIDTH, LENGTH
-  image = Image.new('RGB', (WIDTH, WIDTH))
+  global LENGTH, WIDTH, HEIGHT 
+  image = Image.new('RGB', (WIDTH, HEIGHT))
   image.save('output.png')
   pixels = image.load()
   for i in range(WIDTH):
-    for j in range(WIDTH):
+    for j in range(HEIGHT):
       pixels[j,i] = (og_pixel[j][i], og_pixel[j][i], og_pixel[j][i])
   image.save('output.png')
 
