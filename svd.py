@@ -44,6 +44,7 @@ def re_matrix(pixel):
   return new_pixel
 
 def svd(new_pixel, terms):
+  global WIDTH, HEIGHT
   new_pixel = np.matrix(new_pixel)
   U, s, V = np.linalg.svd(new_pixel, full_matrices=False)
   X = np.matrix(0)
@@ -53,12 +54,13 @@ def svd(new_pixel, terms):
   max_val = X.max()
   min_val = X.min()
   X = (np.absolute(X) / (max_val - min_val)) * 255
-  for vals in range(X):
-    for numbers in X[vals]:
-      if numbers > 255:
-        numbers = 255
-      elif numbers < 0:
-        numbers = 0
+  (WIDTH, HEIGHT) = X.shape
+  for i in range(WIDTH):
+    for j in range(HEIGHT):
+      if X[i, j] > 255:
+        X[i, j] = 255
+      elif X[i, j] < 0:
+        X[i, j] = 0
   return X.astype(int)
 
 def pixel_to_image(og_pixel):
