@@ -36,37 +36,22 @@ def re_matrix(pixel):
         line=[]
   return new_pixel
 
+def svd(new_pixel, terms):
+  new_pixel = np.matrix(new_pixel)
+  U, s, V = np.linalg.svd(new_pixel, full_matrices=True)
+  V1 = np.transpose(V)
+  X = np.matrix(0)
+  j = terms
+  for i in range(j):
+    X = np.add(s[i] * np.matrix(U[:,i]) * np.matrix(V1[i,:]), X)
+  return X
+  # np.savetxt('rank1_comb.txt', rank1_comb, fmt="%s")
 
 if __name__ == '__main__':
   gray = image_to_gray()
   values = store_pixel_values(gray)
   pixel = return_single_vals(values)
-  new_pixel=re_matrix(pixel)
-  # print len(new_pixel)
-  # print len(new_pixel[599])
-  # print new_pixel
+  new_pixel = re_matrix(pixel)
+  terms = int(raw_input("How many terms would you like to keep? (ex 100)\n"))
+  new_pixel = svd(new_pixel, terms)
   np.savetxt('values.txt', new_pixel, fmt="%s")
-
-  new_pixel=np.matrix(new_pixel)
-  U, s, V = np.linalg.svd(new_pixel, full_matrices=True)
-
-  V1=np.transpose(V)
-  X=np.matrix(0)
-  # print X.shape
-  j=100
-  for i in range(j):
-    X=np.add(s[i]*np.matrix(U[:,i])*np.matrix(V1[i,:]),X)
-print
-
-
-
-  #  s.shape
-  # print V1.shape
-  # print U.shape
-  print X.shape
-
-
-
-
-  # np.savetxt('rank1_comb.txt', rank1_comb, fmt="%s")
-
