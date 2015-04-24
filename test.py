@@ -56,11 +56,11 @@ if __name__ == '__main__':
   j=100
   for i in range(j):
     X=np.add(s[i]*np.matrix(U[:,i])*np.matrix(V1[i,:]),X)
-print
 
 
 
-  #  s.shape
+
+  # print s.shape
   # print V1.shape
   # print U.shape
   print X.shape
