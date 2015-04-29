@@ -66,13 +66,15 @@ def svd(new_pixel, terms):
 def pixel_to_image(og_pixel):
   # create an image from the pixel values found previously
   # saves the new image
-  global LENGTH, WIDTH, HEIGHT 
+  global LENGTH, WIDTH, HEIGHT
   image = Image.new('RGB', (WIDTH, HEIGHT))
   image.save('output.png')
   pixels = image.load()
+  np.savetxt('test.txt', og_pixel, fmt="%s")
   for i in range(WIDTH):
     for j in range(HEIGHT):
-      pixels[j,i] = (og_pixel[j][i], og_pixel[j][i], og_pixel[j][i])
+      pass
+      # pixels[i,j] = (og_pixel[j][i], og_pixel[j][i], og_pixel[j][i])
   image.save('output.png')
 
 if __name__ == '__main__':
@@ -82,7 +84,6 @@ if __name__ == '__main__':
   new_pixel = re_matrix(pixel)
   terms = int(raw_input("How many terms would you like to keep? (ex 100)\n"))
   svd_pixel = svd(new_pixel, terms)
-  np.savetxt('test.txt', svd_pixel, fmt="%s")
   pixel_to_image(svd_pixel)
 
   np.savetxt('values.txt', svd_pixel, fmt="%s")
