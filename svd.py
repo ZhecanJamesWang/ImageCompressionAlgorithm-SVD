@@ -2,11 +2,13 @@
 import numpy as np
 import Image
 import sys
+import copy
 
 def image_to_gray():
   # Converts the image to grayscale
   # returns the image
   image = Image.open('image.jpg').convert('LA')
+  image.save('bw.png')
   return image
 
 def store_pixel_values(gray):
@@ -53,7 +55,7 @@ def svd(new_pixel, terms):
     X = np.add(s[i] * np.matrix(U[:,i]) * np.matrix(V[i,:]), X)
   max_val = X.max()
   min_val = X.min()
-  X = (np.absolute(X) / (max_val - min_val)) * 255
+  X = (np.abs(X) / (max_val - min_val)) * 255
   (WIDTH, HEIGHT) = X.shape
   for i in range(WIDTH):
     for j in range(HEIGHT):
@@ -61,7 +63,15 @@ def svd(new_pixel, terms):
         X[i, j] = 255
       elif X[i, j] < 0:
         X[i, j] = 0
-  return X.astype(int)
+      if X[i, j]>=0 and X[i, j] <=255:
+        pass
+      else:
+        X[i, j] = 0
+  X=np.array(X)
+  (WIDTH, HEIGHT) = X.shape
+  output_list=[]
+  output_list = copy.deepcopy(X)
+  return output_list
 
 def pixel_to_image(og_pixel):
   # create an image from the pixel values found previously
@@ -70,11 +80,9 @@ def pixel_to_image(og_pixel):
   image = Image.new('RGB', (WIDTH, HEIGHT))
   image.save('output.png')
   pixels = image.load()
-  np.savetxt('test.txt', og_pixel, fmt="%s")
-  for i in range(WIDTH):
-    for j in range(HEIGHT):
-      pass
-      # pixels[i,j] = (og_pixel[j][i], og_pixel[j][i], og_pixel[j][i])
+  for i in range(WIDTH-1):
+    for j in range(WIDTH-1):
+      pixels[j,i] = (int(og_pixel[j][i]), int(og_pixel[j][i]), int(og_pixel[j][i]))
   image.save('output.png')
 
 if __name__ == '__main__':
