@@ -8,6 +8,7 @@ def image_to_gray():
   # Converts the image to grayscale
   # returns the image
   image = Image.open('image.jpg').convert('LA')
+  image.save('bw.png')
   return image
 
 def store_pixel_values(gray):
@@ -55,7 +56,6 @@ def svd(new_pixel, terms):
   max_val = X.max()
   min_val = X.min()
   X = (np.abs(X) / (max_val - min_val)) * 255
-  # print X
   (WIDTH, HEIGHT) = X.shape
   for i in range(WIDTH):
     for j in range(HEIGHT):
@@ -70,69 +70,20 @@ def svd(new_pixel, terms):
   X=np.array(X)
   (WIDTH, HEIGHT) = X.shape
   output_list=[]
-  # print X.shape
-  # for i in range(WIDTH-1):
-  #   for j in range(HEIGHT-1):
-  #     # print int(X[i][j])
-  #     X[i][j]=(int(X[i][j]))
   output_list = copy.deepcopy(X)
-  print output_list 
-
   return output_list
-  # return X.astype(int)
-
-# def pixel_to_image(og_pixel):
-
-
-
-
-
-#   # create an image from the pixel values found previously
-#   # saves the new image
-#   global LENGTH, WIDTH, HEIGHT 
-#   image = Image.new('RGB', (WIDTH, HEIGHT), "black")
-#   image.save('output.png')
-#   pixels = image.load()
-#   # print type(pixels)
-#   # print og_pixel
-#   pix = np.matrix(pixels)
-#   print pix.shape
-#   # print og_pixel.shape
-
-
-#   # list=[]
-#   # for i in range(WIDTH):
-#   #   for j in range(HEIGHT):
-#   #     # print  (og_pixel[i][j], og_pixel[i][j], og_pixel[i][j])
-#   #     print "---------------------------------"
-#   #     print (og_pixel[i][j]), 
-#   #     print (og_pixel[i][j])
-#   #     print "---------------------------------"      
-#       # pixels[i,j] = (int(og_pixel[i][j]), int(og_pixel[i][j]), 100)
-#       # pixels[i,j] = (100, 100, 100)
-      
-#       # list.append((int(og_pixel[i][j]), int(og_pixel[i][j]), 100))
-#       # np.savetxt('values.txt', svd_pixel, fmt="%s")
-#   image.save('output.png')
-#   # image.show
-
 
 def pixel_to_image(og_pixel):
   # create an image from the pixel values found previously
   # saves the new image
-
-  # print (og_pixel)
   global WIDTH, LENGTH
   image = Image.new('RGB', (WIDTH, WIDTH))
   image.save('output.png')
   pixels = image.load()
   for i in range(WIDTH-1):
     for j in range(WIDTH-1):
-      pixels[j,i] = (int(og_pixel[j][i]), int(og_pixel[j][i]), 100)
+      pixels[j,i] = (int(og_pixel[j][i]), int(og_pixel[j][i]), int(og_pixel[j][i]))
   image.save('output.png')
-
-
-
 
 if __name__ == '__main__':
   gray = image_to_gray()
@@ -141,9 +92,6 @@ if __name__ == '__main__':
   new_pixel = re_matrix(pixel)
   terms = int(raw_input("How many terms would you like to keep? (ex 100)\n"))
   svd_pixel = svd(new_pixel, terms)
-  # np.savetxt('test.txt', svd_pixel, fmt="%s")
   pixel_to_image(svd_pixel)
 
   np.savetxt('values.txt', svd_pixel, fmt="%s")
-
-
