@@ -76,8 +76,8 @@ def svd(new_pixel, terms):
 def pixel_to_image(og_pixel):
   # create an image from the pixel values found previously
   # saves the new image
-  global WIDTH, LENGTH
-  image = Image.new('RGB', (WIDTH, WIDTH))
+  global LENGTH, WIDTH, HEIGHT
+  image = Image.new('RGB', (WIDTH, HEIGHT))
   image.save('output.png')
   pixels = image.load()
   for i in range(WIDTH-1):
