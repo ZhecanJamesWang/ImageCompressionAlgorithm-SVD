@@ -4,10 +4,10 @@ import Image
 import sys
 import copy
 
-def image_to_gray():
+def image_to_gray(image_using):
   # Converts the image to grayscale
   # returns the image
-  image = Image.open('image.jpg').convert('LA')
+  image = Image.open(image_using).convert('LA')
   image.save('bw.png')
   return image
 
@@ -86,7 +86,8 @@ def pixel_to_image(og_pixel):
   image.save('output.png')
 
 if __name__ == '__main__':
-  gray = image_to_gray()
+  image_to_use = raw_input("Which image would you like to compress?\n")
+  gray = image_to_gray(image_to_use)
   values = store_pixel_values(gray)
   pixel = return_single_vals(values)
   new_pixel = re_matrix(pixel)
