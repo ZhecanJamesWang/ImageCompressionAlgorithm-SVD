@@ -2,6 +2,7 @@
 import numpy as np
 import Image
 import sys
+import copy
 
 def image_to_gray():
   # Converts the image to grayscale
@@ -70,10 +71,11 @@ def svd(new_pixel, terms):
   (WIDTH, HEIGHT) = X.shape
   output_list=[]
   # print X.shape
-  for i in range(WIDTH-1):
-    for j in range(HEIGHT-1):
-      # print int(X[i][j])
-      output_list[i][j]=(int(X[i][j]))
+  # for i in range(WIDTH-1):
+  #   for j in range(HEIGHT-1):
+  #     # print int(X[i][j])
+  #     X[i][j]=(int(X[i][j]))
+  output_list = copy.deepcopy(X)
   print output_list 
 
   return output_list
@@ -126,7 +128,7 @@ def pixel_to_image(og_pixel):
   pixels = image.load()
   for i in range(WIDTH-1):
     for j in range(WIDTH-1):
-      pixels[j,i] = (og_pixel[j][i], og_pixel[j][i], og_pixel[j][i])
+      pixels[j,i] = (int(og_pixel[j][i]), int(og_pixel[j][i]), 100)
   image.save('output.png')
 
 
