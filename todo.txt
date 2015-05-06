@@ -1,4 +1,0 @@
-X1. get image
-X2. convert to black and white (binary color values) - opencv
-3. calculate amount of pixels to save (elements in matrix) - linearity part(y)
-4. output/save the image
